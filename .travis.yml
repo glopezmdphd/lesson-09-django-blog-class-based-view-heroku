@@ -3,34 +3,21 @@ python:
   - "3.8"
 dist: xenial
 sudo: required
-addons:
-  apt:
-    sources:
-      - sourceline: 'ppa:deadsnakes/ppa'
-    packages:
-      - wget
-      - build-essential
-      - libreadline-dev
-      - libncurses5-dev
-      - libpcre3-dev
-      - libssl-dev
-      - perl
-      - make
-      - libgdbm-dev
-      - sqlite3
 before_install:
   - wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
   - tar xzf sqlite-autoconf-3420000.tar.gz
   - cd sqlite-autoconf-3420000
-  - ./configure --prefix=/usr
+  - ./configure --prefix=/usr/local
   - make
   - sudo make install
   - cd ..
+  - export PATH="/usr/local/bin:$PATH"
   - sqlite3 --version  # Verify the version of SQLite installed
 install:
   - pip install -r requirements.txt
 script:
   - python manage.py migrate
   - python manage.py test
+
 
 
