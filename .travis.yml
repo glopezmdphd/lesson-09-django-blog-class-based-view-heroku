@@ -2,10 +2,17 @@ language: python
 python:
   - "3.8"
 dist: xenial
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:jonathonf/sqlite3'
+    packages:
+      - sqlite3
+
 install:
   - pip install -r requirements.txt
   - python manage.py migrate
+
 script:
   - python manage.py test
-
-  
