@@ -2,17 +2,21 @@ language: python
 python:
   - "3.8"
 dist: xenial
-
-addons:
-  apt:
-    sources:
-      - sourceline: 'ppa:jonathonf/sqlite3'
-    packages:
-      - sqlite3
-
+sudo: required
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y wget
+  - wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
+  - tar xzf sqlite-autoconf-3420000.tar.gz
+  - cd sqlite-autoconf-3420000
+  - ./configure --prefix=/usr
+  - make
+  - sudo make install
+  - cd ..
+  - sqlite3 --version
 install:
   - pip install -r requirements.txt
-  - python manage.py migrate
-
 script:
+  - python manage.py migrate
   - python manage.py test
+
