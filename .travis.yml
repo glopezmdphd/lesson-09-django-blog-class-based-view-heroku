@@ -7,15 +7,29 @@ addons:
   apt:
     sources:
       - sourceline: 'ppa:deadsnakes/ppa'
-      - sourceline: 'ppa:travis-ci/sqlite3'
     packages:
+      - wget
+      - build-essential
+      - libreadline-dev
+      - libncurses5-dev
+      - libpcre3-dev
+      - libssl-dev
+      - perl
+      - make
+      - libgdbm-dev
       - sqlite3
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y sqlite3 libsqlite3-dev
-  - sqlite3 --version
+  - wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
+  - tar xzf sqlite-autoconf-3420000.tar.gz
+  - cd sqlite-autoconf-3420000
+  - ./configure --prefix=/usr
+  - make
+  - sudo make install
+  - cd ..
+  - sqlite3 --version  # Verify the version of SQLite installed
 install:
   - pip install -r requirements.txt
 script:
   - python manage.py migrate
   - python manage.py test
+
