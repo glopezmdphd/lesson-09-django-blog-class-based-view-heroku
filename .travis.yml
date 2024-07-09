@@ -28,5 +28,7 @@ install:
   - pip install -r requirements.txt
 
 script:
+  - which sqlite3  # Verify the location of sqlite3
+  - ls -l /usr/local/bin/sqlite3  # List the details of the installed sqlite3
   - python3 manage.py migrate
   - python3 manage.py test
