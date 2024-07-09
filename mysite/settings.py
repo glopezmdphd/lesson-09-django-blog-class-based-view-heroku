@@ -117,6 +117,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = "/static/"
 
+# Add STATIC_ROOT setting
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Ensure STATICFILES_DIRS does not include STATIC_ROOT
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 LOGIN_URL = "/login/"
