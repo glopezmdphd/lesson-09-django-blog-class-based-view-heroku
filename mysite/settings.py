@@ -117,11 +117,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = "/static/"
 
-# Add STATIC_ROOT setting
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
-# Ensure STATICFILES_DIRS does not include STATIC_ROOT
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
