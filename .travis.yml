@@ -3,20 +3,30 @@ python:
   - "3.8"
 dist: xenial
 sudo: required
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - sqlite-autoconf-3420000
+
 before_install:
-  - wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
-  - tar xzf sqlite-autoconf-3420000.tar.gz
-  - cd sqlite-autoconf-3420000
-  - ./configure --prefix=/usr/local
-  - make
-  - sudo make install
-  - cd ..
+  - if [ ! -d "sqlite-autoconf-3420000" ]; then
+      wget https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz;
+      tar xzf sqlite-autoconf-3420000.tar.gz;
+      cd sqlite-autoconf-3420000;
+      ./configure --prefix=/usr/local;
+      make;
+      sudo make install;
+      cd ..;
+    fi
   - export PATH="/usr/local/bin:$PATH"
   - export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
   - echo "SQLite version after update:"
-  - sqlite3 --version  # Verify the new SQLite version
+  - sqlite3 --version
+
 install:
   - pip install -r requirements.txt
+
 script:
   - python3 manage.py migrate
   - python3 manage.py test
