@@ -53,7 +53,7 @@ class FrontEndTestCase(TestCase):
         resp = self.client.get('/blogging/')
         resp_text = resp.content.decode(resp.charset)
         print(resp_text)  # Add this line to print the response content
-        self.assertTrue("Recent Posts" in resp_text)
+        self.assertTrue("My Cool Blog Posts" in resp_text)
         for count in range(1, 11):
             title = "Post %d Title" % count
             if count < 6:
